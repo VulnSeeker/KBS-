@@ -1,11 +1,5 @@
-🧠 MBTI KBS - 10/10 Knowledge-Based System
+🧠 MBTI KBS -  Knowledge-Based System
 <div align="center">
-
-https://img.shields.io/badge/version-3.0-purple
-https://img.shields.io/badge/KBS%2520Score-10%252F10-brightgreen
-https://img.shields.io/badge/Inference-Forward%252FBackward-blue
-https://img.shields.io/badge/Certainty%2520Factors-0.7%E2%80%931.0-orange
-https://img.shields.io/badge/Rules-16%252B-red
 
 A Production-Grade Expert System with Forward/Backward Chaining, Certainty Factors, Conflict Resolution, and Full Explanation Trace
 </div>
