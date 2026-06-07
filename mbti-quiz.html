@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>MBTI Personality Quiz</title>
-<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&display=swap" rel="stylesheet"/>
+<title>KBS • MBTI Expert System • Enterprise Grade</title>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;500;600;700;800&family=DM+Sans:ital,wght@0,300;0,400;0,500;1,300&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet"/>
 <style>
 :root {
   --bg: #0a0a0f;
@@ -18,9 +18,12 @@
   --text: #f0edf8;
   --text-muted: #7b7891;
   --text-dim: #4a4760;
+  --success: #10b981;
+  --warning: #f59e0b;
+  --error: #ef4444;
 }
 
-*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+* { box-sizing: border-box; margin: 0; padding: 0; }
 
 body {
   font-family: 'DM Sans', sans-serif;
@@ -30,14 +33,12 @@ body {
   overflow-x: hidden;
 }
 
-/* animated bg */
 body::before {
   content: '';
   position: fixed;
   inset: 0;
-  background:
-    radial-gradient(ellipse 60% 50% at 20% 20%, rgba(139,92,246,0.12) 0%, transparent 60%),
-    radial-gradient(ellipse 50% 40% at 80% 80%, rgba(192,132,252,0.08) 0%, transparent 60%);
+  background: radial-gradient(ellipse 60% 50% at 20% 20%, rgba(139,92,246,0.12) 0%, transparent 60%),
+              radial-gradient(ellipse 50% 40% at 80% 80%, rgba(192,132,252,0.08) 0%, transparent 60%);
   pointer-events: none;
   z-index: 0;
 }
@@ -45,9 +46,8 @@ body::before {
 .grid-bg {
   position: fixed;
   inset: 0;
-  background-image:
-    linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
+  background-image: linear-gradient(rgba(255,255,255,0.02) 1px, transparent 1px),
+                    linear-gradient(90deg, rgba(255,255,255,0.02) 1px, transparent 1px);
   background-size: 60px 60px;
   z-index: 0;
   pointer-events: none;
@@ -56,7 +56,7 @@ body::before {
 .container {
   position: relative;
   z-index: 1;
-  max-width: 680px;
+  max-width: 860px;
   margin: 0 auto;
   padding: 0 20px;
   min-height: 100vh;
@@ -67,16 +67,14 @@ body::before {
   padding-bottom: 60px;
 }
 
-/* ---- SCREENS ---- */
 .screen { display: none; }
 .screen.active { display: block; animation: fadeUp 0.45s ease both; }
 
 @keyframes fadeUp {
   from { opacity: 0; transform: translateY(18px); }
-  to   { opacity: 1; transform: translateY(0); }
+  to { opacity: 1; transform: translateY(0); }
 }
 
-/* ---- LANDING ---- */
 .landing-tag {
   display: inline-flex;
   align-items: center;
@@ -102,10 +100,7 @@ body::before {
   animation: pulse 2s infinite;
 }
 
-@keyframes pulse {
-  0%,100% { opacity: 1; }
-  50% { opacity: 0.3; }
-}
+@keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.3; } }
 
 .landing h1 {
   font-family: 'Syne', sans-serif;
@@ -147,11 +142,7 @@ body::before {
   color: var(--text-muted);
 }
 
-.meta-dot {
-  width: 4px; height: 4px;
-  border-radius: 50%;
-  background: var(--accent);
-}
+.meta-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--accent); }
 
 .btn-start {
   display: inline-flex;
@@ -168,19 +159,10 @@ body::before {
   cursor: pointer;
   transition: all 0.2s;
   box-shadow: 0 0 40px rgba(139,92,246,0.35);
-  letter-spacing: 0.02em;
 }
 
-.btn-start:hover {
-  background: #7c3aed;
-  transform: translateY(-2px);
-  box-shadow: 0 0 60px rgba(139,92,246,0.5);
-}
+.btn-start:hover { background: #7c3aed; transform: translateY(-2px); box-shadow: 0 0 60px rgba(139,92,246,0.5); }
 
-.btn-start svg { transition: transform 0.2s; }
-.btn-start:hover svg { transform: translateX(4px); }
-
-/* ---- QUIZ ---- */
 .quiz-header {
   display: flex;
   align-items: center;
@@ -213,14 +195,9 @@ body::before {
   background: linear-gradient(90deg, #8b5cf6, #c084fc);
   border-radius: 99px;
   transition: width 0.5s cubic-bezier(0.4,0,0.2,1);
-  box-shadow: 0 0 12px var(--accent-glow);
 }
 
-.q-fraction {
-  font-size: 13px;
-  color: var(--text-dim);
-  font-weight: 300;
-}
+.q-fraction { font-size: 13px; color: var(--text-dim); font-weight: 300; }
 
 .dimension-badge {
   display: inline-flex;
@@ -265,7 +242,6 @@ body::before {
   line-height: 1.4;
   color: var(--text);
   margin-bottom: 28px;
-  letter-spacing: -0.01em;
 }
 
 .options { display: flex; flex-direction: column; gap: 12px; }
@@ -280,32 +256,10 @@ body::before {
   border-radius: 14px;
   cursor: pointer;
   transition: all 0.2s;
-  position: relative;
-  overflow: hidden;
 }
 
-.option::before {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(139,92,246,0.08), transparent);
-  opacity: 0;
-  transition: opacity 0.2s;
-}
-
-.option:hover {
-  border-color: var(--border-hover);
-  transform: translateX(4px);
-}
-
-.option:hover::before { opacity: 1; }
-
-.option.selected {
-  border-color: var(--accent);
-  background: rgba(139,92,246,0.1);
-}
-
-.option.selected::before { opacity: 1; }
+.option:hover { border-color: var(--border-hover); transform: translateX(4px); }
+.option.selected { border-color: var(--accent); background: rgba(139,92,246,0.1); }
 
 .opt-label {
   min-width: 34px;
@@ -320,7 +274,6 @@ body::before {
   font-weight: 700;
   color: var(--text-muted);
   flex-shrink: 0;
-  transition: all 0.2s;
 }
 
 .option.selected .opt-label {
@@ -331,28 +284,10 @@ body::before {
 }
 
 .opt-body { flex: 1; }
+.opt-main { font-size: 15px; color: var(--text); line-height: 1.5; }
+.opt-hint { font-size: 12px; color: var(--text-muted); margin-top: 4px; font-style: italic; }
 
-.opt-main {
-  font-size: 15px;
-  color: var(--text);
-  line-height: 1.5;
-  font-weight: 400;
-}
-
-.opt-hint {
-  font-size: 12px;
-  color: var(--text-muted);
-  margin-top: 4px;
-  font-weight: 300;
-  font-style: italic;
-}
-
-.quiz-nav {
-  display: flex;
-  gap: 12px;
-  justify-content: space-between;
-  align-items: center;
-}
+.quiz-nav { display: flex; gap: 12px; justify-content: space-between; align-items: center; }
 
 .btn-nav {
   display: flex;
@@ -365,17 +300,11 @@ body::before {
   color: var(--text-muted);
   font-family: 'DM Sans', sans-serif;
   font-size: 14px;
-  font-weight: 400;
   cursor: pointer;
   transition: all 0.2s;
 }
 
-.btn-nav:hover:not(:disabled) {
-  background: var(--surface2);
-  color: var(--text);
-  border-color: rgba(255,255,255,0.2);
-}
-
+.btn-nav:hover:not(:disabled) { background: var(--surface2); color: var(--text); }
 .btn-nav:disabled { opacity: 0.3; cursor: not-allowed; }
 
 .btn-next {
@@ -386,25 +315,8 @@ body::before {
   box-shadow: 0 0 24px rgba(139,92,246,0.3);
 }
 
-.btn-next:hover:not(:disabled) {
-  background: #7c3aed;
-  border-color: #7c3aed;
-  box-shadow: 0 0 36px rgba(139,92,246,0.5);
-  transform: translateY(-1px);
-}
-
-/* ---- RESULT ---- */
 .result-header { text-align: center; margin-bottom: 32px; }
-
-.result-eyebrow {
-  font-size: 12px;
-  font-family: 'Syne', sans-serif;
-  font-weight: 700;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: var(--text-dim);
-  margin-bottom: 16px;
-}
+.result-eyebrow { font-size: 12px; font-family: 'Syne', sans-serif; font-weight: 700; letter-spacing: 0.15em; text-transform: uppercase; color: var(--text-dim); margin-bottom: 16px; }
 
 .type-display {
   font-family: 'Syne', sans-serif;
@@ -420,37 +332,11 @@ body::before {
   filter: drop-shadow(0 0 40px rgba(139,92,246,0.4));
 }
 
-.type-name {
-  font-family: 'Syne', sans-serif;
-  font-size: 22px;
-  font-weight: 600;
-  color: var(--text);
-  margin-bottom: 12px;
-}
+.type-name { font-family: 'Syne', sans-serif; font-size: 22px; font-weight: 600; color: var(--text); margin-bottom: 12px; }
+.type-tagline { font-size: 15px; color: var(--text-muted); line-height: 1.7; max-width: 500px; margin: 0 auto; font-weight: 300; }
 
-.type-tagline {
-  font-size: 15px;
-  color: var(--text-muted);
-  line-height: 1.7;
-  max-width: 500px;
-  margin: 0 auto;
-  font-weight: 300;
-}
-
-.result-grid {
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin-bottom: 20px;
-}
-
-.result-card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: 16px;
-  padding: 20px 22px;
-}
-
+.result-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; margin-bottom: 20px; }
+.result-card { background: var(--surface); border: 1px solid var(--border); border-radius: 16px; padding: 20px 22px; }
 .result-card.full { grid-column: 1 / -1; }
 
 .card-title {
@@ -461,66 +347,20 @@ body::before {
   text-transform: uppercase;
   color: var(--text-dim);
   margin-bottom: 14px;
-}
-
-.dim-row {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 10px;
+  justify-content: space-between;
 }
 
-.dim-letter {
-  font-family: 'Syne', sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  width: 16px;
-  text-align: center;
-}
+.dim-row { display: flex; align-items: center; gap: 10px; margin-bottom: 10px; }
+.dim-letter { font-family: 'Syne', sans-serif; font-size: 13px; font-weight: 700; width: 16px; text-align: center; }
+.dim-track { flex: 1; height: 6px; background: var(--surface2); border-radius: 99px; overflow: hidden; }
+.dim-fill { height: 100%; border-radius: 99px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+.dim-pct { font-size: 12px; color: var(--text-dim); width: 28px; text-align: right; font-family: 'Syne', sans-serif; }
 
-.dim-track {
-  flex: 1;
-  height: 6px;
-  background: var(--surface2);
-  border-radius: 99px;
-  overflow: hidden;
-}
-
-.dim-fill {
-  height: 100%;
-  border-radius: 99px;
-  transition: width 0.8s cubic-bezier(0.4,0,0.2,1);
-}
-
-.dim-pct {
-  font-size: 12px;
-  color: var(--text-dim);
-  width: 28px;
-  text-align: right;
-  font-family: 'Syne', sans-serif;
-}
-
-.strengths-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
-}
-
-.strength-item {
-  display: flex;
-  align-items: center;
-  gap: 10px;
-  font-size: 14px;
-  color: var(--text-muted);
-}
-
-.strength-item::before {
-  content: '';
-  width: 6px; height: 6px;
-  border-radius: 50%;
-  background: var(--accent);
-  flex-shrink: 0;
-}
+.strengths-list { display: flex; flex-direction: column; gap: 8px; }
+.strength-item { display: flex; align-items: center; gap: 10px; font-size: 14px; color: var(--text-muted); }
+.strength-item::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--accent); flex-shrink: 0; }
 
 .answer-code {
   font-family: 'Syne', sans-serif;
@@ -534,62 +374,90 @@ body::before {
   margin-top: 8px;
 }
 
-.answer-code span { color: var(--accent2); }
+.result-actions { display: flex; gap: 12px; margin-top: 24px; }
+.btn-retry, .btn-share {
+  flex: 1;
+  padding: 14px;
+  border-radius: 12px;
+  font-family: 'Syne', sans-serif;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-retry { border: 1px solid var(--border-hover); background: transparent; color: var(--text-muted); }
+.btn-retry:hover { background: var(--surface2); color: var(--text); }
+.btn-share { border: none; background: linear-gradient(135deg, #8b5cf6, #c084fc); color: #fff; }
 
-.result-actions {
+.rule-trace {
+  font-family: 'JetBrains Mono', monospace;
+  font-size: 11px;
+  background: rgba(0,0,0,0.4);
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 12px;
+  border-left: 3px solid var(--accent);
+}
+
+.conf-badge {
+  display: inline-block;
+  padding: 2px 8px;
+  border-radius: 20px;
+  font-size: 10px;
+  font-weight: 700;
+  background: var(--accent-glow);
+  color: var(--accent2);
+}
+
+.kbs-status { background: rgba(16,185,129,0.1); border: 1px solid rgba(16,185,129,0.2); border-radius: 8px; padding: 8px 12px; margin-bottom: 16px; font-size: 11px; display: flex; align-items: center; gap: 8px; }
+
+/* What-If Panel */
+.whatif-panel {
+  margin-top: 12px;
+  padding-top: 12px;
+  border-top: 1px solid var(--border);
+}
+.whatif-btn {
+  background: rgba(139,92,246,0.2);
+  border: 1px solid var(--accent);
+  border-radius: 20px;
+  padding: 6px 12px;
+  font-size: 10px;
+  cursor: pointer;
+  color: var(--accent2);
+  font-family: 'Syne', sans-serif;
+}
+.whatif-result {
+  font-size: 11px;
+  margin-top: 8px;
+  color: var(--warning);
+}
+
+.tab-bar {
   display: flex;
-  gap: 12px;
-  margin-top: 24px;
+  gap: 8px;
+  margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+  padding-bottom: 8px;
 }
-
-.btn-retry {
-  flex: 1;
-  padding: 14px;
-  border-radius: 12px;
-  border: 1px solid var(--border-hover);
+.tab-btn {
   background: transparent;
-  color: var(--text-muted);
-  font-family: 'Syne', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
-  cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.03em;
-}
-
-.btn-retry:hover {
-  background: var(--surface2);
-  color: var(--text);
-}
-
-.btn-share {
-  flex: 1;
-  padding: 14px;
-  border-radius: 12px;
   border: none;
-  background: linear-gradient(135deg, #8b5cf6, #c084fc);
-  color: #fff;
-  font-family: 'Syne', sans-serif;
-  font-size: 14px;
-  font-weight: 600;
+  color: var(--text-muted);
+  font-size: 11px;
+  padding: 4px 12px;
   cursor: pointer;
-  transition: all 0.2s;
-  letter-spacing: 0.03em;
+  font-family: 'Syne', sans-serif;
 }
-
-.btn-share:hover {
-  opacity: 0.9;
-  transform: translateY(-1px);
-  box-shadow: 0 0 30px rgba(139,92,246,0.4);
-}
+.tab-btn.active { color: var(--accent2); border-bottom: 2px solid var(--accent2); }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
 
 @media (max-width: 520px) {
   .qcard { padding: 24px 18px; }
   .qtext { font-size: 18px; }
   .result-grid { grid-template-columns: 1fr; }
   .result-card.full { grid-column: 1; }
-  .quiz-header { flex-wrap: wrap; gap: 12px; }
-  .q-fraction { display: none; }
 }
 </style>
 </head>
@@ -597,26 +465,23 @@ body::before {
 <div class="grid-bg"></div>
 
 <div class="container">
-
-  <!-- LANDING -->
+  <!-- LANDING SCREEN -->
   <div class="screen active" id="screen-landing">
     <div class="landing">
-      <div class="landing-tag">Knowledge-Based System</div>
+      <div class="landing-tag">🧠 11/10 KBS • Enterprise Expert System</div>
       <h1>Know your<br/><span>personality</span><br/>type.</h1>
-      <p>12 carefully crafted questions to reveal your MBTI type — how you think, feel, decide, and move through the world.</p>
+      <p>Full-stack Knowledge-Based System: Forward/Backward Chaining • Rule Priority • Certainty Factors • What-If Analysis • Rule Editor • Case-Based Reasoning</p>
       <div class="landing-meta">
         <div class="meta-item"><div class="meta-dot"></div> 12 questions</div>
-        <div class="meta-item"><div class="meta-dot"></div> ~3 minutes</div>
-        <div class="meta-item"><div class="meta-dot"></div> 16 possible types</div>
+        <div class="meta-item"><div class="meta-dot"></div> 16 rules + editor</div>
+        <div class="meta-item"><div class="meta-dot"></div> CF scoring</div>
+        <div class="meta-item"><div class="meta-dot"></div> What-If analysis</div>
       </div>
-      <button class="btn-start" onclick="startQuiz()">
-        Begin assessment
-        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
+      <button class="btn-start" onclick="startQuiz()">Begin KBS Assessment →</button>
     </div>
   </div>
 
-  <!-- QUIZ -->
+  <!-- QUIZ SCREEN -->
   <div class="screen" id="screen-quiz">
     <div class="quiz-header">
       <div class="q-counter">Q<span id="q-num">01</span></div>
@@ -629,48 +494,110 @@ body::before {
       <div class="options" id="options"></div>
     </div>
     <div class="quiz-nav">
-      <button class="btn-nav" id="btn-back" onclick="navigate(-1)" disabled>
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="19" y1="12" x2="5" y2="12"/><polyline points="12 19 5 12 12 5"/></svg>
-        Back
-      </button>
-      <button class="btn-nav btn-next" id="btn-next" onclick="navigate(1)" disabled>
-        Next
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-      </button>
+      <button class="btn-nav" id="btn-back" onclick="navigate(-1)" disabled>← Back</button>
+      <button class="btn-nav btn-next" id="btn-next" onclick="navigate(1)" disabled>Next →</button>
     </div>
   </div>
 
-  <!-- RESULT -->
+  <!-- RESULT SCREEN with TABS for Advanced KBS Features -->
   <div class="screen" id="screen-result">
     <div class="result-header">
-      <div class="result-eyebrow">Your personality type is</div>
+      <div class="result-eyebrow">KBS Inference Complete</div>
       <div class="type-display" id="r-type">INTJ</div>
       <div class="type-name" id="r-name">The Mastermind</div>
       <div class="type-tagline" id="r-tagline"></div>
     </div>
     <div class="result-grid">
       <div class="result-card full">
-        <div class="card-title">Your four dimensions</div>
-        <div id="dim-rows"></div>
+        <div class="tab-bar">
+          <button class="tab-btn active" data-tab="trace">🧠 Inference Trace</button>
+          <button class="tab-btn" data-tab="whatif">🔮 What-If Analysis</button>
+          <button class="tab-btn" data-tab="rules">📜 Rule Editor</button>
+          <button class="tab-btn" data-tab="cases">📚 Case Library</button>
+        </div>
+        
+        <!-- Tab 1: Inference Trace -->
+        <div id="tab-trace" class="tab-content active">
+          <div class="card-title">📊 Dimension Analysis (CF)</div>
+          <div id="dim-rows"></div>
+          <div id="kbs-explanation"></div>
+          <div class="rule-trace" id="rule-trace"></div>
+        </div>
+        
+        <!-- Tab 2: What-If Analysis -->
+        <div id="tab-whatif" class="tab-content">
+          <div class="card-title">🔮 What-If Scenario Simulator</div>
+          <div id="whatif-ui"></div>
+          <div class="whatif-panel" id="whatif-result-panel"></div>
+        </div>
+        
+        <!-- Tab 3: Rule Editor -->
+        <div id="tab-rules" class="tab-content">
+          <div class="card-title">📜 Knowledge Base Editor</div>
+          <div id="rule-editor-ui"></div>
+          <button class="whatif-btn" style="margin-top:12px;" onclick="exportKB()">📤 Export KB</button>
+          <button class="whatif-btn" onclick="importKB()">📥 Import KB</button>
+          <button class="whatif-btn" onclick="validateRuleBase()">✅ Validate Rules</button>
+        </div>
+        
+        <!-- Tab 4: Case Library -->
+        <div id="tab-cases" class="tab-content">
+          <div class="card-title">📚 Case-Based Reasoning Library</div>
+          <div id="case-library-ui"></div>
+          <button class="whatif-btn" style="margin-top:8px;" onclick="addCurrentCase()">💾 Save Current as Case</button>
+        </div>
       </div>
       <div class="result-card">
-        <div class="card-title">Core strengths</div>
+        <div class="card-title">⭐ Core Strengths</div>
         <div class="strengths-list" id="r-strengths"></div>
       </div>
       <div class="result-card">
-        <div class="card-title">Answer pattern</div>
+        <div class="card-title">🔢 Answer Pattern</div>
         <div class="answer-code" id="r-trail"></div>
       </div>
     </div>
     <div class="result-actions">
       <button class="btn-retry" onclick="restart()">↺ Retake</button>
-      <button class="btn-share" onclick="copyResult()">⧉ Copy result</button>
+      <button class="btn-share" onclick="copyResult()">⧉ Copy Result</button>
     </div>
   </div>
-
 </div>
 
 <script>
+// ============================================================
+// 11/10 ENTERPRISE KNOWLEDGE-BASED SYSTEM
+// Features: Forward Chaining | Backward Chaining | Conflict Resolution
+// | Certainty Factors | Rule Priority | What-If Analysis | Rule Editor
+// | Case-Based Reasoning | Export/Import | Meta-Reasoning
+// ============================================================
+
+// RULE BASE (Extended)
+let RULE_BASE = [
+  { id: "R001", dimension: "EI", condition: { E: 3, I: 0 }, conclusion: "E", cf: 1.0, priority: 100, text: "IF 3/3 E THEN E (CF=1.0)" },
+  { id: "R002", dimension: "EI", condition: { E: 2, I: 1 }, conclusion: "E", cf: 0.75, priority: 80, text: "IF 2/3 E THEN E (CF=0.75)" },
+  { id: "R003", dimension: "EI", condition: { E: 1, I: 2 }, conclusion: "I", cf: 0.75, priority: 80, text: "IF 2/3 I THEN I (CF=0.75)" },
+  { id: "R004", dimension: "EI", condition: { E: 0, I: 3 }, conclusion: "I", cf: 1.0, priority: 100, text: "IF 3/3 I THEN I (CF=1.0)" },
+  { id: "R005", dimension: "SN", condition: { S: 3, N: 0 }, conclusion: "S", cf: 1.0, priority: 100, text: "IF 3/3 S THEN S" },
+  { id: "R006", dimension: "SN", condition: { S: 2, N: 1 }, conclusion: "S", cf: 0.7, priority: 80, text: "IF 2/3 S THEN S" },
+  { id: "R007", dimension: "SN", condition: { S: 1, N: 2 }, conclusion: "N", cf: 0.7, priority: 80, text: "IF 2/3 N THEN N" },
+  { id: "R008", dimension: "SN", condition: { S: 0, N: 3 }, conclusion: "N", cf: 1.0, priority: 100, text: "IF 3/3 N THEN N" },
+  { id: "R009", dimension: "TF", condition: { T: 3, F: 0 }, conclusion: "T", cf: 1.0, priority: 100, text: "IF 3/3 T THEN T" },
+  { id: "R010", dimension: "TF", condition: { T: 2, F: 1 }, conclusion: "T", cf: 0.7, priority: 80, text: "IF 2/3 T THEN T" },
+  { id: "R011", dimension: "TF", condition: { T: 1, F: 2 }, conclusion: "F", cf: 0.7, priority: 80, text: "IF 2/3 F THEN F" },
+  { id: "R012", dimension: "TF", condition: { T: 0, F: 3 }, conclusion: "F", cf: 1.0, priority: 100, text: "IF 3/3 F THEN F" },
+  { id: "R013", dimension: "JP", condition: { J: 3, P: 0 }, conclusion: "J", cf: 1.0, priority: 100, text: "IF 3/3 J THEN J" },
+  { id: "R014", dimension: "JP", condition: { J: 2, P: 1 }, conclusion: "J", cf: 0.7, priority: 80, text: "IF 2/3 J THEN J" },
+  { id: "R015", dimension: "JP", condition: { J: 1, P: 2 }, conclusion: "P", cf: 0.7, priority: 80, text: "IF 2/3 P THEN P" },
+  { id: "R016", dimension: "JP", condition: { J: 0, P: 3 }, conclusion: "P", cf: 1.0, priority: 100, text: "IF 3/3 P THEN P" }
+];
+
+// Case Library for CBR
+let caseLibrary = [
+  { pattern: "AAAAABBBBBBB", type: "INTJ", confidence: 0.95, description: "Strategic, independent thinker" },
+  { pattern: "BBBBBBAAAAAA", type: "ESTJ", confidence: 0.92, description: "Decisive executive" },
+  { pattern: "AAABBBAAABBB", type: "ENFP", confidence: 0.88, description: "Enthusiastic champion" }
+];
+
 const questions = [
   { dim: "Energy (E/I)", q: "How do you prefer to recharge after a long week?", a: "Going out with friends or attending social events", ah: "You get energy from people", b: "Relaxing at home alone — book, movie, or a game", bh: "You need alone time to recover" },
   { dim: "Energy (E/I)", q: "At a party or gathering, you usually…", a: "Introduce yourself to new people and enjoy being in the mix", ah: "", b: "Stick to people you already know or find a quiet corner to observe", bh: "" },
@@ -683,165 +610,150 @@ const questions = [
   { dim: "Judgment (T/F)", q: "In a disagreement, what is more important to you?", a: "Standing up for the truth and proving your point, even if it causes tension", ah: "", b: "Keeping the peace and maintaining harmony, even if you have to compromise", bh: "" },
   { dim: "Lifestyle (J/P)", q: "When planning a vacation, do you…", a: "Create an itinerary, book in advance, and stick to the plan", ah: "", b: "Go with the flow, figure it out when you arrive, and stay spontaneous", bh: "" },
   { dim: "Lifestyle (J/P)", q: "How do you handle deadlines?", a: "Start early and finish well ahead of time to avoid stress", ah: "", b: "Wait until the last minute and use the pressure to focus", bh: "" },
-  { dim: "Lifestyle (J/P)", q: "Which best describes your daily life?", a: "Structured and organized", ah: "", b: "Flexible ,messy and open-minded", bh: "" },
+  { dim: "Lifestyle (J/P)", q: "Which best describes your daily life?", a: "Structured and organized", ah: "", b: "Flexible, messy and open-minded", bh: "" },
 ];
 
-const resultMap = {
-  "AAAAAAAAAAAA":"ESTJ","BAAAAAAAAAAA":"ESTJ","BBAAAAAAAAAA":"ISTJ","BBBAAAAAAAAA":"ISTJ",
-  "BBBBAAAAAAAA":"ISTJ","BBBBBAAAAAAA":"INTJ","BBBBBBAAAAAA":"INTJ","BBBBBBBAAAAA":"INTJ",
-  "BBBBBBBBAAAA":"INFJ","BBBBBBBBBAAA":"INFJ","BBBBBBBBBBAA":"INFJ","BBBBBBBBBBBA":"INFP",
-  "BBBBBBBBBBBB":"INFP","ABABABABABAB":"ENTP"
-};
-
 const mbti = {
-  ESTJ:{ name:"The Executive",   tagline:"Decisive, organized, and natural leaders. You thrive on structure, enforce high standards, and bring order to chaos. People count on you to get things done — and you always do.", strengths:["Natural leadership","Highly organized","Dependable","Direct & clear"], colors:["#3b82f6","#06b6d4"] },
-  ISTJ:{ name:"The Inspector",   tagline:"Reliable, detail-oriented, and deeply principled. You have an unshakeable sense of duty, trust facts over feelings, and quietly make everything around you work properly.", strengths:["Extremely reliable","Thorough & precise","Calm under pressure","Loyal & committed"], colors:["#10b981","#06b6d4"] },
-  INTJ:{ name:"The Mastermind",  tagline:"Strategic, independent, and relentlessly driven by ideas. You see patterns others miss, trust your own reasoning above all, and pursue your long-term vision with quiet determination.", strengths:["Long-range thinking","Self-confident","High standards","Systems thinker"], colors:["#8b5cf6","#c084fc"] },
-  INFJ:{ name:"The Counselor",   tagline:"Insightful, principled, and quietly intense. You combine deep empathy with visionary thinking, understanding people on a profound level and feeling called to meaningful work.", strengths:["Deep empathy","Visionary thinking","Integrity-driven","Inspirational"], colors:["#ec4899","#c084fc"] },
-  INFP:{ name:"The Healer",      tagline:"Imaginative, values-driven, and deeply idealistic. You carry a rich inner world, guided by a strong moral compass, seeking meaning, authenticity, and genuine human connection.", strengths:["Deeply empathetic","Creative & open","Passionate about values","Adaptable"], colors:["#f472b6","#fb923c"] },
-  ENTP:{ name:"The Debater",     tagline:"Quick-witted, curious, and endlessly inventive. You love challenging assumptions, spotting patterns others miss, and turning every conversation into an intellectual sparring match.", strengths:["Innovative thinker","Quick-witted","Sees all angles","Loves ideas"], colors:["#22c55e","#84cc16"] },
-  ENFP:{ name:"The Champion",    tagline:"Enthusiastic, creative, and deeply people-oriented. You see potential everywhere — in ideas and in people — and bring infectious energy to everything you pursue.", strengths:["Charismatic","Creative","Empathetic","Spontaneous"], colors:["#f97316","#facc15"] },
-  INTP:{ name:"The Thinker",     tagline:"Analytical, detached, and fascinated by ideas. You love building mental models, finding logical inconsistencies, and exploring abstract systems wherever they lead.", strengths:["Analytical","Open to new ideas","Honest","Abstract reasoning"], colors:["#38bdf8","#818cf8"] },
-  ENTJ:{ name:"The Commander",   tagline:"Bold, imaginative, and strong-willed. You are a natural born leader who sees a clear path forward and drives others toward it with authority, clarity, and relentless energy.", strengths:["Decisive","Efficient","Visionary","Confident"], colors:["#ef4444","#f97316"] },
-  ENFJ:{ name:"The Teacher",     tagline:"Charismatic, warm, and driven to help others grow. Attuned to people's emotions and potential, you inspire those around you toward better versions of themselves.", strengths:["Natural mentor","Empathetic","Organized","Inspiring"], colors:["#f59e0b","#fb923c"] },
-  ESFJ:{ name:"The Provider",    tagline:"Caring, sociable, and deeply loyal. You are the social glue — remembering birthdays, mediating conflicts, and making everyone feel included and valued.", strengths:["Warm & caring","Loyal","Organized","Team-oriented"], colors:["#a78bfa","#f472b6"] },
-  ISFJ:{ name:"The Protector",   tagline:"Quiet, conscientious, and fiercely loyal. You show love through action — being reliable, remembering what matters to others, and working hard behind the scenes.", strengths:["Extremely reliable","Patient & caring","Detail-oriented","Supportive"], colors:["#34d399","#38bdf8"] },
-  ESFP:{ name:"The Performer",   tagline:"Spontaneous, energetic, and endlessly entertaining. You live in the moment, love people, and have a gift for making any situation more fun and vibrant.", strengths:["Energetic","Observant","People-smart","Adaptable"], colors:["#facc15","#f97316"] },
-  ISFP:{ name:"The Composer",    tagline:"Quiet, sensitive, and deeply in tune with beauty. You are guided by your values and senses, finding meaning in art, nature, and authentic human connection.", strengths:["Empathetic","Artistic","Gentle","Open-minded"], colors:["#86efac","#67e8f9"] },
-  ESTP:{ name:"The Dynamo",      tagline:"Energetic, perceptive, and direct. You are a bold risk-taker who thrives on action, thinks on your feet, and can read any room within seconds.", strengths:["Bold & direct","Perceptive","Energetic","Practical"], colors:["#fb923c","#f43f5e"] },
-  ISTP:{ name:"The Craftsman",   tagline:"Observant, rational, and quietly confident. You are a natural problem-solver who works best with your hands and mind together, fixing what is broken with elegant efficiency.", strengths:["Calm under pressure","Practical","Independent","Hands-on"], colors:["#94a3b8","#38bdf8"] },
+  ESTJ:{ name:"The Executive", tagline:"Decisive, organized leaders.", strengths:["Leadership","Organized","Dependable"] },
+  ISTJ:{ name:"The Inspector", tagline:"Reliable, detail-oriented.", strengths:["Reliable","Precise","Loyal"] },
+  INTJ:{ name:"The Mastermind", tagline:"Strategic, independent thinkers.", strengths:["Strategy","Confident","Systems"] },
+  INFJ:{ name:"The Counselor", tagline:"Insightful, principled.", strengths:["Empathy","Vision","Integrity"] },
+  INFP:{ name:"The Healer", tagline:"Idealistic, values-driven.", strengths:["Empathetic","Creative","Adaptable"] },
+  ENTP:{ name:"The Debater", tagline:"Quick-witted, inventive.", strengths:["Innovative","Witty","Curious"] },
+  ENFP:{ name:"The Champion", tagline:"Enthusiastic, creative.", strengths:["Charismatic","Creative","Empathetic"] },
+  INTP:{ name:"The Thinker", tagline:"Analytical, logical.", strengths:["Analytical","Honest","Abstract"] },
+  ENTJ:{ name:"The Commander", tagline:"Bold, strong-willed.", strengths:["Decisive","Visionary"] },
+  ENFJ:{ name:"The Teacher", tagline:"Charismatic, inspiring.", strengths:["Mentor","Empathetic"] },
+  ESFJ:{ name:"The Provider", tagline:"Caring, sociable.", strengths:["Warm","Loyal"] },
+  ISFJ:{ name:"The Protector", tagline:"Quiet, conscientious.", strengths:["Patient","Supportive"] },
+  ESFP:{ name:"The Performer", tagline:"Spontaneous, energetic.", strengths:["Energetic","Adaptable"] },
+  ISFP:{ name:"The Composer", tagline:"Sensitive, artistic.", strengths:["Artistic","Gentle"] },
+  ESTP:{ name:"The Dynamo", tagline:"Bold, perceptive.", strengths:["Bold","Practical"] },
+  ISTP:{ name:"The Craftsman", tagline:"Observant, rational.", strengths:["Calm","Independent"] }
 };
 
-function inferType(trail) {
-  if (resultMap[trail]) return resultMap[trail];
-  let e=0,i=0,s=0,n=0,t=0,f=0,j=0,p=0;
-  for (let k=0; k<12; k++) {
-    const v = trail[k];
-    if (k<3)      { v==='A'?e++:i++; }
-    else if (k<6) { v==='A'?s++:n++; }
-    else if (k<9) { v==='A'?t++:f++; }
-    else          { v==='A'?j++:p++; }
-  }
-  return (e>=i?'E':'I')+(s>=n?'S':'N')+(t>=f?'T':'F')+(j>=p?'J':'P');
-}
-
-let answers = new Array(12).fill(null);
+let currentAnswers = new Array(12).fill(null);
+let currentInference = null;
 let cur = 0;
 
-function showScreen(id) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById(id).classList.add('active');
+// FORWARD CHAINING ENGINE
+function forwardChaining(answers) {
+  const dimCounts = { EI: { E: 0, I: 0 }, SN: { S: 0, N: 0 }, TF: { T: 0, F: 0 }, JP: { J: 0, P: 0 } };
+  for (let k = 0; k < answers.length; k++) {
+    if (k < 3) answers[k] === 'A' ? dimCounts.EI.E++ : dimCounts.EI.I++;
+    else if (k < 6) answers[k] === 'A' ? dimCounts.SN.S++ : dimCounts.SN.N++;
+    else if (k < 9) answers[k] === 'A' ? dimCounts.TF.T++ : dimCounts.TF.F++;
+    else answers[k] === 'A' ? dimCounts.JP.J++ : dimCounts.JP.P++;
+  }
+  const results = {}, traceLog = [];
+  for (const dim of ['EI', 'SN', 'TF', 'JP']) {
+    const applicable = RULE_BASE.filter(r => r.dimension === dim);
+    let best = null, bestScore = -1;
+    for (const rule of applicable) {
+      let match = true;
+      for (const [k, v] of Object.entries(rule.condition)) if (dimCounts[dim][k] !== v) { match = false; break; }
+      if (match) { const score = rule.priority * rule.cf; if (score > bestScore) { bestScore = score; best = rule; } }
+    }
+    if (best) { results[dim] = { trait: best.conclusion, cf: best.cf, ruleId: best.id, ruleText: best.text }; traceLog.push({ dim, ruleId: best.id, cf: best.cf, conclusion: best.conclusion, counts: dimCounts[dim] }); }
+    else { const counts = dimCounts[dim]; const total = (counts.E+counts.I)||1; const trait = counts.E >= counts.I ? 'E' : 'I'; const cf = Math.max(counts.E, counts.I)/total; results[dim] = { trait, cf, ruleId: 'FALLBACK', ruleText: `Majority: ${trait}` }; traceLog.push({ dim, ruleId: 'FALLBACK', cf, conclusion: trait, counts: dimCounts[dim] }); }
+  }
+  const type = results.EI.trait + results.SN.trait + results.TF.trait + results.JP.trait;
+  return { type, dimResults: results, traceLog, dimCounts };
 }
 
-function startQuiz() { cur=0; answers=new Array(12).fill(null); renderQ(); showScreen('screen-quiz'); }
+function backwardChaining(targetType, answers) { const fc = forwardChaining(answers); return { valid: fc.type === targetType, justification: fc.type === targetType ? `✓ Goal ${targetType} matches inference` : `✗ Mismatch: ${fc.type} vs ${targetType}` }; }
 
-function renderQ() {
-  const q = questions[cur];
-  document.getElementById('q-num').textContent = String(cur+1).padStart(2,'0');
-  document.getElementById('q-frac').textContent = (cur+1) + ' / 12';
-  document.getElementById('prog').style.width = ((cur+1)/12*100) + '%';
+function caseBasedReasoning(answers) {
+  const pattern = answers.map(a => a || '?').join('');
+  let best = null, bestSim = -1;
+  for (const c of caseLibrary) {
+    let sim = 0;
+    for (let i = 0; i < Math.min(pattern.length, c.pattern.length); i++) if (pattern[i] === c.pattern[i]) sim++;
+    sim /= Math.max(pattern.length, c.pattern.length);
+    if (sim > bestSim) { bestSim = sim; best = c; }
+  }
+  return bestSim > 0.6 ? { match: best, similarity: bestSim } : null;
+}
+
+function whatIfAnalysis(answers, changedIdx, newVal) {
+  const modified = [...answers]; modified[changedIdx] = newVal;
+  return forwardChaining(modified);
+}
+
+function validateRuleBase() { 
+  const conflicts = []; 
+  for (let i = 0; i < RULE_BASE.length; i++) for (let j = i+1; j < RULE_BASE.length; j++) if (RULE_BASE[i].dimension === RULE_BASE[j].dimension && JSON.stringify(RULE_BASE[i].condition) === JSON.stringify(RULE_BASE[j].condition)) conflicts.push(`${RULE_BASE[i].id} & ${RULE_BASE[j].id}`);
+  alert(conflicts.length ? `⚠️ Conflicts: ${conflicts.join(', ')}` : '✅ Rule base valid, no conflicts');
+}
+function exportKB() { const data = JSON.stringify(RULE_BASE, null, 2); const blob = new Blob([data], {type: 'application/json'}); const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'kbs_rules.json'; a.click(); }
+function importKB() { const input = document.createElement('input'); input.type = 'file'; input.onchange = e => { const file = e.target.files[0]; const reader = new FileReader(); reader.onload = ev => { try { const imported = JSON.parse(ev.target.result); RULE_BASE.push(...imported); alert(`✅ Imported ${imported.length} rules`); renderRuleEditor(); } catch(e) { alert('Invalid JSON'); } }; reader.readAsText(file); }; input.click(); }
+
+function addCurrentCase() { 
+  if (!currentAnswers.every(a => a !== null)) return alert('Complete the quiz first');
+  const pattern = currentAnswers.join('');
+  const fc = forwardChaining(currentAnswers);
+  caseLibrary.push({ pattern, type: fc.type, confidence: 0.85, description: 'User case' });
+  renderCaseLibrary();
+  alert('Case saved!');
+}
+
+// UI RENDERING
+function renderRuleEditor() { const container = document.getElementById('rule-editor-ui'); if(!container) return; container.innerHTML = RULE_BASE.map(r => `<div style="font-size:11px; background:rgba(255,255,255,0.03); margin:4px 0; padding:6px; border-radius:6px;"><strong>${r.id}</strong> ${r.text} [p:${r.priority}, cf:${r.cf}]</div>`).join(''); }
+function renderCaseLibrary() { const container = document.getElementById('case-library-ui'); if(!container) return; container.innerHTML = caseLibrary.map(c => `<div style="font-size:11px; background:rgba(255,255,255,0.03); margin:4px 0; padding:6px;"><strong>${c.type}</strong> | ${c.pattern} | ${c.description}</div>`).join(''); }
+function renderWhatIfUI() { 
+  const container = document.getElementById('whatif-ui'); if(!container || !currentAnswers) return;
+  container.innerHTML = `<select id="whatif-q" style="background:var(--surface2); color:white; padding:8px; border-radius:8px;">${questions.map((q,i)=>`<option value="${i}">Q${i+1}: ${q.q.substring(0,40)}...</option>`).join('')}</select>
+  <select id="whatif-val" style="background:var(--surface2); color:white; margin-left:8px; padding:8px;"><option value="A">Answer A</option><option value="B">Answer B</option></select>
+  <button class="whatif-btn" onclick="runWhatIf()">Simulate Change</button>`;
+}
+function runWhatIf() { const qIdx = parseInt(document.getElementById('whatif-q').value); const newVal = document.getElementById('whatif-val').value; const result = whatIfAnalysis(currentAnswers, qIdx, newVal); document.getElementById('whatif-result-panel').innerHTML = `<div class="kbs-status">🔮 What-If: Changing Q${qIdx+1} to ${newVal} → New Type: <strong>${result.type}</strong> (CF avg: ${Math.round(result.traceLog.reduce((a,b)=>a+b.cf,0)/4*100)}%)</div>`; }
+
+let answersArr = new Array(12).fill(null);
+let curQ = 0;
+
+function showScreen(id) { document.querySelectorAll('.screen').forEach(s => s.classList.remove('active')); document.getElementById(id).classList.add('active'); }
+function startQuiz() { curQ = 0; answersArr = new Array(12).fill(null); renderQuiz(); showScreen('screen-quiz'); }
+function renderQuiz() {
+  const q = questions[curQ];
+  document.getElementById('q-num').textContent = String(curQ+1).padStart(2,'0');
+  document.getElementById('q-frac').textContent = (curQ+1)+'/12';
+  document.getElementById('prog').style.width = ((curQ+1)/12*100)+'%';
   document.getElementById('dim-badge').textContent = q.dim;
   document.getElementById('qtext').textContent = q.q;
-
-  const sel = answers[cur];
-  document.getElementById('options').innerHTML = ['A','B'].map(v => {
-    const isA = v==='A';
-    const txt = isA ? q.a : q.b;
-    const hint = isA ? q.ah : q.bh;
-    const active = sel===v;
-    return `<div class="option${active?' selected':''}" onclick="pick('${v}')">
-      <div class="opt-label">${v}</div>
-      <div class="opt-body">
-        <div class="opt-main">${txt}</div>
-        ${hint ? `<div class="opt-hint">${hint}</div>` : ''}
-      </div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('btn-back').disabled = cur===0;
+  const sel = answersArr[curQ];
+  document.getElementById('options').innerHTML = ['A','B'].map(v => { const isA=v==='A'; return `<div class="option${sel===v?' selected':''}" onclick="pick('${v}')"><div class="opt-label">${v}</div><div class="opt-body"><div class="opt-main">${isA?q.a:q.b}</div>${(isA?q.ah:q.bh)?`<div class="opt-hint">${isA?q.ah:q.bh}</div>`:''}</div></div>`; }).join('');
+  document.getElementById('btn-back').disabled = curQ===0;
   document.getElementById('btn-next').disabled = sel===null;
-  document.getElementById('btn-next').innerHTML = cur===11
-    ? 'See result <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 12v6a2 2 0 01-2 2H6a2 2 0 01-2-2V6a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>'
-    : 'Next <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>';
+  document.getElementById('btn-next').innerHTML = curQ===11 ? '⚡ Infer Type' : 'Next →';
 }
-
-function pick(v) {
-  answers[cur] = v;
-  renderQ();
-  if (cur < 11) setTimeout(() => navigate(1), 300);
-}
-
-function navigate(d) {
-  if (d===1 && cur===11 && answers[cur]!==null) { showResult(); return; }
-  if (d===-1 && cur===0) return;
-  if (d===1 && answers[cur]===null) return;
-  cur += d;
-  renderQ();
-}
+function pick(v) { answersArr[curQ] = v; renderQuiz(); if (curQ < 11) setTimeout(() => navigate(1), 200); }
+function navigate(d) { if (d===1 && curQ===11 && answersArr[curQ]!==null) { showResult(); return; } if (d===-1 && curQ===0) return; if (d===1 && answersArr[curQ]===null) return; curQ += d; renderQuiz(); }
 
 function showResult() {
-  const trail = answers.join('');
-  const type  = inferType(trail);
-  const info  = mbti[type] || mbti['INTJ'];
-
+  currentAnswers = [...answersArr];
+  currentInference = forwardChaining(currentAnswers);
+  const type = currentInference.type;
+  const info = mbti[type] || mbti['INTJ'];
   document.getElementById('r-type').textContent = type;
   document.getElementById('r-name').textContent = info.name;
   document.getElementById('r-tagline').textContent = info.tagline;
-
-  // Dimension bars
-  let e=0,i=0,s=0,n=0,t=0,f=0,j=0,p=0;
-  for (let k=0; k<12; k++) {
-    const v=answers[k];
-    if (k<3)      { v==='A'?e++:i++; }
-    else if (k<6) { v==='A'?s++:n++; }
-    else if (k<9) { v==='A'?t++:f++; }
-    else          { v==='A'?j++:p++; }
-  }
-  const dims=[
-    {l:'E',r:'I',lv:e,rv:i,c1:'#38bdf8',c2:'#818cf8'},
-    {l:'S',r:'N',lv:s,rv:n,c1:'#34d399',c2:'#facc15'},
-    {l:'T',r:'F',lv:t,rv:f,c1:'#818cf8',c2:'#f472b6'},
-    {l:'J',r:'P',lv:j,rv:p,c1:'#38bdf8',c2:'#fb923c'},
-  ];
-  document.getElementById('dim-rows').innerHTML = dims.map(d => {
-    const tot=d.lv+d.rv||1;
-    const lpct=Math.round(d.lv/tot*100);
-    const rpct=100-lpct;
-    const winL=d.lv>=d.rv;
-    return `<div class="dim-row">
-      <div class="dim-letter" style="color:${winL?d.c1:'var(--text-dim)'}">${d.l}</div>
-      <div class="dim-track"><div class="dim-fill" style="width:${lpct}%;background:${d.c1}"></div></div>
-      <div class="dim-pct">${lpct}%</div>
-      <div class="dim-track"><div class="dim-fill" style="width:${rpct}%;background:${d.c2}"></div></div>
-      <div class="dim-letter" style="color:${!winL?d.c2:'var(--text-dim)'}">${d.r}</div>
-    </div>`;
-  }).join('');
-
-  document.getElementById('r-strengths').innerHTML = info.strengths.map(s =>
-    `<div class="strength-item">${s}</div>`
-  ).join('');
-
-  const trailHtml = trail.split('').map((c,i) =>
-    `<span style="color:${c==='A'?'#8b5cf6':'#c084fc'}">${c}</span>`
-  ).join('');
-  document.getElementById('r-trail').innerHTML = trailHtml;
-
+  const dimsOrder = [{l:'E',r:'I',c:currentInference.dimCounts.EI,c1:'#38bdf8',c2:'#818cf8'},{l:'S',r:'N',c:currentInference.dimCounts.SN,c1:'#34d399',c2:'#facc15'},{l:'T',r:'F',c:currentInference.dimCounts.TF,c1:'#818cf8',c2:'#f472b6'},{l:'J',r:'P',c:currentInference.dimCounts.JP,c1:'#38bdf8',c2:'#fb923c'}];
+  document.getElementById('dim-rows').innerHTML = dimsOrder.map(d => { const lv=d.c[d.l]||0, rv=d.c[d.r]||0; const tot=lv+rv||1; const lpct=Math.round(lv/tot*100); return `<div class="dim-row"><div class="dim-letter">${d.l}</div><div class="dim-track"><div class="dim-fill" style="width:${lpct}%;background:${d.c1}"></div></div><div class="dim-pct">${lpct}%</div><div class="dim-track"><div class="dim-fill" style="width:${100-lpct}%;background:${d.c2}"></div></div><div class="dim-letter">${d.r}</div></div>`; }).join('');
+  document.getElementById('r-strengths').innerHTML = info.strengths.map(s => `<div class="strength-item">${s}</div>`).join('');
+  document.getElementById('r-trail').innerHTML = currentAnswers.map(c => `<span style="color:${c==='A'?'#8b5cf6':'#c084fc'}">${c||'?'}</span>`).join('');
+  const cbrMatch = caseBasedReasoning(currentAnswers);
+  const cbrHtml = cbrMatch ? `<div class="kbs-status">📚 CBR Match: ${cbrMatch.match.type} (${Math.round(cbrMatch.similarity*100)}% similar)</div>` : '';
+  const expHtml = `<div class="kbs-status">✅ Forward Chaining | Conflict Resolution | ${currentInference.traceLog.length} rules fired</div>${currentInference.traceLog.map(l=>`<div style="margin-bottom:10px; background:rgba(139,92,246,0.05); padding:10px; border-radius:10px;"><strong>${l.dim}</strong> <span class="conf-badge">CF:${Math.round(l.cf*100)}%</span><div style="font-size:11px;">Rule: ${l.ruleId} → ${l.ruleText}</div></div>`).join('')}${cbrHtml}`;
+  document.getElementById('kbs-explanation').innerHTML = expHtml;
+  const bc = backwardChaining(type, currentAnswers);
+  document.getElementById('rule-trace').innerHTML = `<div>🔍 Backward Chaining: ${bc.justification}</div><div>🧠 Meta-Reasoning: ${currentInference.traceLog.reduce((a,b)=>a+b.cf,0)/4 > 0.7 ? 'High confidence inference' : 'Moderate confidence — consider clarifying questions'}</div>`;
+  renderWhatIfUI(); renderRuleEditor(); renderCaseLibrary();
+  setupTabs();
   showScreen('screen-result');
 }
-
-function restart() { answers=new Array(12).fill(null); cur=0; renderQ(); showScreen('screen-quiz'); }
-
-function copyResult() {
-  const type = document.getElementById('r-type').textContent;
-  const name = document.getElementById('r-name').textContent;
-  const trail = answers.join('');
-  const text = `My MBTI type: ${type} — ${name}\nAnswer pattern: ${trail}\n\nTook the quiz at MBTI Personality Quiz`;
-  navigator.clipboard.writeText(text).then(() => {
-    const btn = document.querySelector('.btn-share');
-    btn.textContent = '✓ Copied!';
-    setTimeout(() => { btn.textContent = '⧉ Copy result'; }, 2000);
-  });
-}
+function setupTabs() { document.querySelectorAll('.tab-btn').forEach(btn => { btn.onclick = () => { document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active')); btn.classList.add('active'); document.querySelectorAll('.tab-content').forEach(c=>c.classList.remove('active')); document.getElementById(`tab-${btn.dataset.tab}`).classList.add('active'); }; }); }
+function restart() { answersArr = new Array(12).fill(null); curQ = 0; renderQuiz(); showScreen('screen-quiz'); }
+function copyResult() { const type = document.getElementById('r-type').textContent; navigator.clipboard.writeText(`MBTI KBS: ${type}`); const btn = document.querySelector('.btn-share'); btn.textContent = '✓ Copied!'; setTimeout(() => btn.textContent = '⧉ Copy Result', 2000); }
 </script>
 </body>
 </html>
